@@ -8,6 +8,15 @@ import time
 
 # Set up Chrome options
 chrome_options = Options()
+
+# Headless mode is a way of running a web browser without a graphical user interface (GUI). This allows the browser to operate in the background, which is useful for automated tasks such as web scraping, testing, and other automation tasks where you do not need to see the browser window.
+# In headless mode, the browser performs all the same operations as it would in normal mode, but it does not display any visual output. This can make automated tasks faster and more efficient, as it reduces the overhead associated with rendering the GUI.
+chrome_options.add_argument("--headless")  # Run in headless mode
+chrome_options.add_argument("--no-sandbox")  # Required when running as root
+chrome_options.add_argument("--disable-dev-shm-usage")  # Overcome limited resource problems
+chrome_options.add_argument("--disable-gpu")  # Applicable for some environments
+chrome_options.add_argument("--remote-debugging-port=9222")  # Debugging
+
 chrome_options.add_experimental_option('prefs', {
     #"download.default_directory": r"C:\path\to\your\download\directory",  # Change this to your download directory
     "download.prompt_for_download": False,
@@ -16,7 +25,8 @@ chrome_options.add_experimental_option('prefs', {
 })
 
 # Set up the WebDriver
-service = Service('C:\\WebDriver\\bin\\chromedriver.exe')  # Change this to the path of your chromedriver
+# service = Service('C:\\WebDriver\\bin\\chromedriver.exe')  # Change this to the path of your chromedriver
+service = Service('/usr/local/bin/chromedriver')  # Change this to the path of your chromedriver
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 button = None
